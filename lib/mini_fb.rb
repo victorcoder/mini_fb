@@ -338,7 +338,7 @@ module MiniFB
     #   - type: eg: feed, home, etc
     #   - metadata: to include metadata in response. true/false
     def self.get(access_token, id, options={})
-        if id.is_a?(Array) && options[:type] #victorcoder
+        if id.is_a?(Array) #victorcoder
           url = "#{graph_base}#{options[:type]}"
           url << "?access_token=#{URI.escape(access_token)}"
           url << "&metadata=1" if options[:metadata]
