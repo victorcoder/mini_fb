@@ -338,10 +338,17 @@ module MiniFB
     #   - type: eg: feed, home, etc
     #   - metadata: to include metadata in response. true/false
     def self.get(access_token, id, options={})
-        url = "#{graph_base}#{id}"
-        url << "/#{options[:type]}" if options[:type]
-        url << "?access_token=#{URI.escape(access_token)}"
-        url << "&metadata=1" if options[:metadata]
+        if id.is_a?(Array) && options[:type] #victorcoder
+          url = "#{graph_base}#{options[:type]}"
+          url << "?access_token=#{URI.escape(access_token)}"
+          url << "&metadata=1" if options[:metadata]
+          url << "&ids=#{id.join(",")}"
+        else
+          url = "#{graph_base}#{id}"
+          url << "/#{options[:type]}" if options[:type]
+          url << "?access_token=#{URI.escape(access_token)}"
+          url << "&metadata=1" if options[:metadata]
+        end
         return fetch(url)
     end
 
